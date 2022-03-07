@@ -90,13 +90,6 @@ be soldered to a prototype shield and attached to the Raspberry Pi.
 
 .. image:: https://raw.githubusercontent.com/MSLNZ/pr-autocollimator/main/resources/rpi-hat.jpg
 
-Lightbulb
----------
-.. image:: https://raw.githubusercontent.com/MSLNZ/pr-autocollimator/main/resources/schematic-lightbulb.png
-
-LED Ring
---------
-.. image:: https://raw.githubusercontent.com/MSLNZ/pr-autocollimator/main/resources/schematic-led-ring.png
-
+.. image:: https://raw.githubusercontent.com/MSLNZ/pr-autocollimator/main/resources/schematic.jpg
 
 .. _MSL Package Manager: https://msl-package-manager.readthedocs.io/en/stable/
