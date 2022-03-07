@@ -1,10 +1,19 @@
 pr-autocollimator
 =================
-Uses a Raspberry Pi HQ camera to determine the location of the crosshair on the autocollimator.
+Uses a Raspberry Pi HQ camera to acquire an image of the eyepiece of the autocollimator,
+which is then used to determine the location of the crosshair.
 
 Install
 =======
-Use the `MSL Package Manager`_
+To install the package on a Raspberry Pi run,
+
+.. code-block:: console
+
+   sudo apt install git
+   git clone https://github.com/MSLNZ/pr-autocollimator.git
+   source pr-autocollimator/rpi-setup.sh
+
+To install the package on a computer that is not a Raspberry Pi use the `MSL Package Manager`_
 
 .. code-block:: console
 
@@ -12,9 +21,14 @@ Use the `MSL Package Manager`_
 
 Usage
 =====
-The web application starts automatically (via an @reboot cronjob).
+The web application starts automatically when the Raspberry Pi starts (via an @reboot cron job).
 
-There are 4 endpoints that should be called in the recommended order:
+There are 4 endpoints that should be called in the following recommended order:
+
+.. note::
+
+   The hostname of the Raspberry Pi has been configured to be ``pr-autocollimator`` in these
+   examples. You may need to modify the URL for your Raspberry Pi.
 
 1. http://pr-autocollimator
 
@@ -24,32 +38,65 @@ There are 4 endpoints that should be called in the recommended order:
 2. http://pr-autocollimator/initialize
 
     Call this endpoint second. It finds the location of the origin and the crosshair.
-    Also accepts a ``threshold`` parameter, value between [0, 255] that you can
-    include as a URL parameter if the origin cannot be found, e.g.,
-    ``http://pr-autocollimator/initialize?threshold=40``
+
+    Accepts the following parameters:
+
+    * ``threshold`` - A value between [0, 255] to filter the axes from the image.
+
+    For example,
+
+    * ``http://pr-autocollimator/initialize?threshold=40``
 
 3. http://pr-autocollimator/crosshair
 
-    Call this endpoint every time you want to know the location of the crosshair.
+    Call this endpoint when you want to know the location of the crosshair.
+
     Accepts the following parameters:
 
         * ``threshold`` - A value between [0, 255] to filter the crosshair from the image.
         * ``origin`` - The location of the origin as comma-separated values. If not specified
           then uses the value that was determined from the last call to
           ``http://pr-autocollimator/initialize``
-        * ``pixels_per_arcmin`` - The conversion factor to convert pixels coordinates to arcmin.
-        * ``plot`` - Whether to return a plot of the crosshair instead of JSON data.
-          The value is either 0 (JSON) or 1 (plot).
+        * ``pixels_per_arcmin`` - The conversion factor to convert pixel coordinates to arcmin.
+        * ``debug`` - Whether to return a binary image of the localized crosshair and the projections
+          along the x and y axes. To enable `debug` mode use ``debug=1``. The default value is 0.
+        * ``show`` - Whether to return an image of the localized crosshair. To enable `show` mode
+          use ``show=1``. The default value is 0.
 
     Some examples,
 
-    * ``http://pr-autocollimator/crosshair?plot=1``
+    * ``http://pr-autocollimator/crosshair?debug=1``
+    * ``http://pr-autocollimator/crosshair?show=1``
     * ``http://pr-autocollimator/crosshair?threshold=40``
     * ``http://pr-autocollimator/crosshair?threshold=40&origin=1340,960&pixels_per_arcmin=20``
 
 4. http://pr-autocollimator/shutdown
 
-    Call this endpoint when you want to shutdown the Raspberry Pi.
+    Call this endpoint when you want to shut down the Raspberry Pi.
+
+Hardware
+========
+The following hardware is used:
+
+* Raspberry Pi 4 (running buster, _NOT_ bullseye)
+* Raspberry Pi High Quality Camera
+* Raspberry Pi HQ Camera Lens - 6mm Wide Angle
+* Duinotech (NeoPixel) RGB LED Ring - 24x LEDs, 72mm outer diameter
+
+Schematics
+==========
+The circuits to power the lightbulb of the autocollimator and to control the LED ring can
+be soldered to a prototype shield and attached to the Raspberry Pi.
+
+.. image:: https://raw.githubusercontent.com/MSLNZ/pr-autocollimator/main/resources/rpi-hat.jpg
+
+Lightbulb
+---------
+.. image:: https://raw.githubusercontent.com/MSLNZ/pr-autocollimator/main/resources/schematic-lightbulb.png
+
+LED Ring
+--------
+.. image:: https://raw.githubusercontent.com/MSLNZ/pr-autocollimator/main/resources/schematic-led-ring.png
 
 
 .. _MSL Package Manager: https://msl-package-manager.readthedocs.io/en/stable/
