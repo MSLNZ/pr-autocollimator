@@ -83,7 +83,7 @@ install_requires = [
     'requests',
     'flask; "arm" in platform_machine',
     'picamera; "arm" in platform_machine',
-    'rpi_ws281x; "arm" in platform_machine',
+    'rpi-ws281x; "arm" in platform_machine',
     'RPi.GPIO; "arm" in platform_machine',
 ]
 
