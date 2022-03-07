@@ -159,7 +159,7 @@ def crosshair():
     result['x_pixel'] = crosshair_['x']
     result['y_pixel'] = crosshair_['y']
 
-    if request.args.get('plot', default=0, type=int):
+    if request.args.get('debug', default=0, type=int):
         return to_img_tag(plot_crosshair(crosshair_))
 
     arcmin = to_arcmin(crosshair_, xy0, pixels_per_arcmin=pixels_per_arcmin)
@@ -179,6 +179,9 @@ def crosshair():
         add_marker(image, crosshair_, (0, 255, 0), label='({x:.1f}, {y:.1f})'.format(**arcmin))
 
     result['image'] = to_base64(image)
+    if request.args.get('show', default=0, type=int):
+        return to_img_tag(result['image'])
+
     return jsonify(result)
 
 
