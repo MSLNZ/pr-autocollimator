@@ -5,76 +5,7 @@ from subprocess import check_output
 from setuptools import (
     setup,
     find_packages,
-    Command,
 )
-
-
-class ApiDocs(Command):
-    """
-    A custom command that calls sphinx-apidoc
-    see: https://www.sphinx-doc.org/en/master/man/sphinx-apidoc.html
-    """
-    description = 'builds the api documentation using sphinx-apidoc'
-    user_options = []
-
-    def initialize_options(self):
-        pass
-
-    def finalize_options(self):
-        pass
-
-    def run(self):
-        command = [
-            None,  # in Sphinx < 1.7.0 the first command-line argument was parsed, in 1.7.0 it became argv[1:]
-            '--force',  # overwrite existing files
-            '--module-first',  # put module documentation before submodule documentation
-            '--separate',  # put documentation for each module on its own page
-            '-o', './docs/_autosummary',  # where to save the output files
-            'autocollimator',  # the path to the Python package to document
-        ]
-
-        import sphinx
-        if sphinx.version_info[:2] < (1, 7):
-            from sphinx.apidoc import main
-        else:
-            from sphinx.ext.apidoc import main
-            command.pop(0)
-
-        main(command)
-
-
-class BuildDocs(Command):
-    """
-    A custom command that calls sphinx-build
-    see: https://www.sphinx-doc.org/en/master/man/sphinx-build.html
-    """
-    description = 'builds the documentation using sphinx-build'
-    user_options = []
-
-    def initialize_options(self):
-        pass
-
-    def finalize_options(self):
-        pass
-
-    def run(self):
-        command = [
-            None,  # in Sphinx < 1.7.0 the first command-line argument was parsed, in 1.7.0 it became argv[1:]
-            '-b', 'html',  # the builder to use, e.g., create a HTML version of the documentation
-            '-a',  # generate output for all files
-            '-E',  # ignore cached files, forces to re-read all source files from disk
-            'docs',  # the source directory where the documentation files are located
-            './docs/_build/html',  # where to save the output files
-        ]
-
-        import sphinx
-        if sphinx.version_info[:2] < (1, 7):
-            from sphinx import build_main
-        else:
-            from sphinx.cmd.build import build_main
-            command.pop(0)
-
-        build_main(command)
 
 
 def read(filename):
@@ -145,7 +76,7 @@ def get_version():
     return dev_version
 
 
-# specify the packages that pr-autocollimator depends on
+# the packages that pr-autocollimator depends on
 install_requires = [
     'opencv-python==4.5.4.60',
     'numpy==1.21.4',
@@ -156,17 +87,10 @@ install_requires = [
     'RPi.GPIO; "arm" in platform_machine',
 ]
 
-# specify the packages that are needed for running the tests
+# the packages that are needed for running the tests
 tests_require = ['pytest', 'pytest-cov']
 
-# specify the packages that are needed for building the docs
-docs_require = ['sphinx', 'sphinx_rtd_theme']
-
 testing = {'test', 'tests'}.intersection(sys.argv)
-pytest_runner = ['pytest-runner'] if testing else []
-
-needs_sphinx = {'doc', 'docs', 'apidoc', 'apidocs'}.intersection(sys.argv)
-sphinx = docs_require + install_requires if needs_sphinx else []
 
 init_original = 'autocollimator/__init__.py'
 init_backup = init_original + '.backup'
@@ -178,7 +102,7 @@ setup(
     author=fetch_init('__author__'),
     author_email='info@measurement.govt.nz',
     url='https://github.com/MSLNZ/pr-autocollimator',
-    description='Use a camera to locate the crosshair of the autocollimator',
+    description='Locate the crosshair of the autocollimator',
     long_description=read('README.rst'),
     platforms='any',
     license='MIT',
@@ -197,11 +121,9 @@ setup(
         'Topic :: Software Development',
         'Topic :: Scientific/Engineering',
     ],
-    setup_requires=sphinx + pytest_runner,
     tests_require=tests_require,
     install_requires=install_requires,
-    extras_require={'tests': tests_require, 'docs': docs_require},
-    cmdclass={'docs': BuildDocs, 'apidocs': ApiDocs},
+    extras_require={'tests': tests_require},
     entry_points={
         'console_scripts': [
             'autocollimator = autocollimator.webapp:run',
