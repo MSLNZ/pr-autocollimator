@@ -58,7 +58,7 @@ There are 4 endpoints that should be called in the following recommended order:
         * ``pixels_per_arcmin`` - The conversion factor to convert pixel units to arcmin units.
         * ``debug`` - Whether to return a binary image of the localized crosshair and the projections
           along the x and y axes. To enable *debug* mode use ``debug=1``. The default value is 0.
-        * ``show`` - Whether to return an image of the localized crosshair. To enable `show` mode
+        * ``show`` - Whether to return an image of the localized crosshair. To enable *show* mode
           use ``show=1``. The default value is 0.
 
     Some examples,
