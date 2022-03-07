@@ -25,10 +25,8 @@ The web application starts automatically when the Raspberry Pi starts (via an @r
 
 There are 4 endpoints that should be called in the following recommended order:
 
-.. note::
-
-   The hostname of the Raspberry Pi has been configured to be ``pr-autocollimator`` in these
-   examples. You may need to modify the URL for your Raspberry Pi.
+*The hostname of the Raspberry Pi has been configured to be ``pr-autocollimator`` in these*
+*examples. You may need to modify the URL for your Raspberry Pi based on your hostname.*
 
 1. http://pr-autocollimator
 
@@ -78,7 +76,7 @@ Hardware
 ========
 The following hardware is used:
 
-* Raspberry Pi 4 (running buster, _NOT_ bullseye)
+* Raspberry Pi 4 (running buster, *NOT* bullseye)
 * Raspberry Pi High Quality Camera
 * Raspberry Pi HQ Camera Lens - 6mm Wide Angle
 * Duinotech (NeoPixel) RGB LED Ring - 24x LEDs, 72mm outer diameter
