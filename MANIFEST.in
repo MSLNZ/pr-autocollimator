@@ -1,0 +1,2 @@
+include autocollimator/static/favicon.ico
+recursive-include autocollimator/templates *.html
