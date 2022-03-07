@@ -52,12 +52,12 @@ There are 4 endpoints that should be called in the following recommended order:
     Accepts the following parameters:
 
         * ``threshold`` - A value between [0, 255] to filter the crosshair from the image.
-        * ``origin`` - The location of the origin as comma-separated values. If not specified
-          then uses the value that was determined from the last call to
+        * ``origin`` - The location of the origin as comma-separated values (in pixel units).
+          If not specified then uses the value that was determined from the last call to
           ``http://pr-autocollimator/initialize``
-        * ``pixels_per_arcmin`` - The conversion factor to convert pixel coordinates to arcmin.
+        * ``pixels_per_arcmin`` - The conversion factor to convert pixel units to arcmin units.
         * ``debug`` - Whether to return a binary image of the localized crosshair and the projections
-          along the x and y axes. To enable `debug` mode use ``debug=1``. The default value is 0.
+          along the x and y axes. To enable *debug* mode use ``debug=1``. The default value is 0.
         * ``show`` - Whether to return an image of the localized crosshair. To enable `show` mode
           use ``show=1``. The default value is 0.
 
@@ -76,7 +76,7 @@ Hardware
 ========
 The following hardware is used:
 
-* Raspberry Pi 4 (running buster, *NOT* bullseye)
+* Raspberry Pi 4 (running stretch or buster, *NOT* bullseye)
 * Raspberry Pi High Quality Camera
 * Raspberry Pi HQ Camera Lens - 6mm Wide Angle
 * Duinotech (NeoPixel) RGB LED Ring - 24x LEDs, 72mm outer diameter
