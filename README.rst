@@ -1,7 +1,7 @@
-pr-autocollimator
-=================
-Uses a Raspberry Pi HQ camera to acquire an image of the eyepiece of the autocollimator,
-which is then used to determine the location of the crosshair.
+Uses a Raspberry Pi HQ camera to acquire an image of the eyepiece of the autocollimator
+to determine the location of the crosshair.
+
+.. image:: https://raw.githubusercontent.com/MSLNZ/pr-autocollimator/main/resources/assembly.jpg
 
 Install
 =======
