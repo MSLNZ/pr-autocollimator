@@ -61,7 +61,7 @@ def crosshair(*, host='pr-autocollimator', debug=False, show=False,
     reply.raise_for_status()
 
     if debug or show:
-        return reply.content
+        return reply.content.decode()
 
     json = reply.json()
     buffer = BytesIO(b64decode(json['image']))
