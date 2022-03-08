@@ -21,12 +21,12 @@ To install the package on a computer that is not a Raspberry Pi use the `MSL Pac
 
 Usage
 =====
-The web application starts automatically when the Raspberry Pi starts (via an @reboot cron job).
+The web application starts automatically (via an @reboot cron job) when the Raspberry Pi is turned on.
 
 There are 4 endpoints that should be called in the following recommended order:
 
-*The hostname of the Raspberry Pi has been configured to be* ``pr-autocollimator`` *in these*
-*examples. You may need to modify the URL for your Raspberry Pi based on your hostname.*
+*NOTE: The hostname of the Raspberry Pi has been configured to be* ``pr-autocollimator``
+*in these examples. You may need to modify the URL for your Raspberry Pi based on your hostname.*
 
 1. http://pr-autocollimator
 
@@ -71,8 +71,7 @@ There are 4 endpoints that should be called in the following recommended order:
     * ``http://pr-autocollimator/crosshair?threshold=40``
     * ``http://pr-autocollimator/crosshair?threshold=40&origin=1340,960&pixels_per_arcmin=20``
 
-
-    You can call this endpoint from a Python script
+    You can call this endpoint from Python
 
     .. code-block:: pycon
 
@@ -89,7 +88,7 @@ There are 4 endpoints that should be called in the following recommended order:
 
     Call this endpoint from a script (or visit the URL in a web browser) to shut down the Raspberry Pi.
 
-    You can call this endpoint from a Python script
+    You can call this endpoint from Python
 
     .. code-block:: pycon
 
