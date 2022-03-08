@@ -20,6 +20,9 @@ cd pr-autocollimator
 python -m pip install .
 cd ..
 
+# deactivate the virtual environment
+deactivate
+
 # ANSI escape codes
 YELLOW='\033[0;33m'
 CYAN='\033[0;36m'
