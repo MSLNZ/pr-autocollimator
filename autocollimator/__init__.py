@@ -69,3 +69,24 @@ def crosshair(*, host='pr-autocollimator', debug=False, show=False,
     image = cv.imdecode(arr, flags=cv.IMREAD_UNCHANGED)
     json['image'] = image
     return json
+
+
+def saveas(filename, image, params=None):
+    """Save the image to a file.
+
+    Parameters
+    ----------
+    filename : :class:`str`
+        The name of the file to save to.
+    image : :class:`numpy.ndarray`
+        The image in OpenCV format.
+    params : :class:`tuple`, optional
+        Format-specific parameters encoded as pairs (paramId_1, paramValue_1, paramId_2, paramValue_2, ...).
+        See :ref:`ImwriteFlags <https://docs.opencv.org/3.4/d8/d6a/group__imgcodecs__flags.html#ga292d81be8d76901bff7988d18d2b42ac>`_
+
+    Returns
+    -------
+    :class:`bool`
+        Whether calling this function was successful.
+    """
+    return cv.imwrite(filename, image, params=params)
