@@ -33,8 +33,8 @@ RESET='\033[0m'
 
 echo
 echo -e "${YELLOW}Make sure that the camera interface is enable in the Raspberry Pi Configuration.${RESET}"
-echo -e "${YELLOW}Also, edit crontab to start the web application on reboot, run${RESET}"
+echo -e "${YELLOW}Also, edit crontab to start the web application on reboot, i.e., run${RESET}"
 echo -e "${CYAN}sudo crontab -e${RESET}"
-echo -e "${CYAN}then append the following line to the file,${RESET}"
+echo -e "${YELLOW}and then append the following line to the file,${RESET}"
 echo -e "${CYAN}@reboot /home/pi/$ENV/bin/autocollimator >/home/pi/autocollimator.log 2>&1${RESET}"
 echo
