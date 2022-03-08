@@ -82,9 +82,11 @@ install_requires = [
     'numpy==1.21.4',
     'requests',
     'flask; "arm" in platform_machine',
+    'matplotlib; "arm" in platform_machine',
     'picamera; "arm" in platform_machine',
     'rpi-ws281x; "arm" in platform_machine',
     'RPi.GPIO; "arm" in platform_machine',
+    'scipy==1.7.3; "arm" in platform_machine',
 ]
 
 # the packages that are needed for running the tests
