@@ -90,3 +90,14 @@ def saveas(filename, image, params=None):
         Whether calling this function was successful.
     """
     return cv.imwrite(filename, image, params=params)
+
+
+def shutdown(*, host='pr-autocollimator'):
+    """Shut down the Raspberry Pi.
+
+    Parameters
+    ----------
+    host : :class:`str`, optional
+        The hostname or IP address of the Raspberry Pi.
+    """
+    requests.get(f'http://{host}/shutdown')
