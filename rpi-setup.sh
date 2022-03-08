@@ -20,6 +20,9 @@ cd pr-autocollimator
 python -m pip install .
 cd ..
 
+# remove the source folder
+rm -rf pr-autocollimator/
+
 # deactivate the virtual environment
 deactivate
 
