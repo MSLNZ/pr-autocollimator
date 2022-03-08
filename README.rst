@@ -25,7 +25,7 @@ The web application starts automatically when the Raspberry Pi starts (via an @r
 
 There are 4 endpoints that should be called in the following recommended order:
 
-*The hostname of the Raspberry Pi has been configured to be ``pr-autocollimator`` in these*
+*The hostname of the Raspberry Pi has been configured to be* ``pr-autocollimator`` *in these*
 *examples. You may need to modify the URL for your Raspberry Pi based on your hostname.*
 
 1. http://pr-autocollimator
@@ -67,6 +67,19 @@ There are 4 endpoints that should be called in the following recommended order:
     * ``http://pr-autocollimator/crosshair?show=1``
     * ``http://pr-autocollimator/crosshair?threshold=40``
     * ``http://pr-autocollimator/crosshair?threshold=40&origin=1340,960&pixels_per_arcmin=20``
+
+    You can call this endpoint from a Python script
+
+    .. code-block:: pycon
+
+       >>> import autocollimator
+       >>> crosshair = autocollimator.crosshair()
+       >>> crosshair.keys()
+       dict_keys(['x_pixel', 'y_pixel', 'x_arcmin', 'y_arcmin', 'x_degree', 'y_degree', 'image'])
+       >>> crosshair['x_arcmin'], crosshair['y_arcmin']
+       (-4.0140337610487595, -1.759120713580572)
+       >>> autocollimator.saveas('crosshair_image.jpeg', crosshair['image'])
+       True
 
 4. http://pr-autocollimator/shutdown
 
