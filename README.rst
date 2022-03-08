@@ -58,9 +58,9 @@ There are 4 endpoints that should be called in the following recommended order:
           If not specified then the program uses the value that was determined from the last
           call to ``http://pr-autocollimator/initialize``
         * ``pixels_per_arcmin`` - The conversion factor to convert pixel units to arcmin units.
-        * ``debug`` - Whether to return a binary image of the localized crosshair and the
-          projections along the x and y axes. To enable *debug* mode use ``debug=1`` in the
-          URL parameter. The default value is 0.
+        * ``debug`` - Whether to return an html <img> tag of the binary image of the localized
+          crosshair and the projections along the x and y axes. To enable *debug* mode use
+          ``debug=1`` in the URL parameter. The default value is 0.
         * ``show`` - Whether to return an html <img> tag of the localized crosshair. To enable
           *show* mode use ``show=1`` in the URL parameter. The default value is 0.
 
