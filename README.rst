@@ -17,6 +17,7 @@ To install the package on a computer that is not a Raspberry Pi use the `MSL Pac
 
 .. code-block:: console
 
+   pip install msl-package-manager
    msl install pr-autocollimator
 
 Usage
