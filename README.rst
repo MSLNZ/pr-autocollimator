@@ -30,12 +30,13 @@ There are 4 endpoints that should be called in the following recommended order:
 
 1. http://pr-autocollimator
 
-    Use this endpoint when aligning the autocollimator with the polygon mirror.
+    Visit this URL in a web browser when aligning the autocollimator with the polygon mirror.
     The image resolution is lower and the update rate is much faster.
 
 2. http://pr-autocollimator/initialize
 
-    Call this endpoint second. It finds the location of the origin and the crosshair.
+    Visit this URL in a web browser after you have aligned the autocollimator with the
+    polygon mirror. It displays the location of the origin and the crosshair.
 
     Accepts the following parameters:
 
@@ -47,19 +48,21 @@ There are 4 endpoints that should be called in the following recommended order:
 
 3. http://pr-autocollimator/crosshair
 
-    Call this endpoint when you want to know the location of the crosshair.
+    Call this endpoint from a script (or visit the URL in a web browser for quick debugging)
+    when you want to determine the location of the crosshair.
 
     Accepts the following parameters:
 
         * ``threshold`` - A value between [0, 255] to filter the crosshair from the image.
         * ``origin`` - The location of the origin as comma-separated values (in pixel units).
-          If not specified then uses the value that was determined from the last call to
-          ``http://pr-autocollimator/initialize``
+          If not specified then the program uses the value that was determined from the last
+          call to ``http://pr-autocollimator/initialize``
         * ``pixels_per_arcmin`` - The conversion factor to convert pixel units to arcmin units.
-        * ``debug`` - Whether to return a binary image of the localized crosshair and the projections
-          along the x and y axes. To enable *debug* mode use ``debug=1``. The default value is 0.
-        * ``show`` - Whether to return an image of the localized crosshair. To enable *show* mode
-          use ``show=1``. The default value is 0.
+        * ``debug`` - Whether to return a binary image of the localized crosshair and the
+          projections along the x and y axes. To enable *debug* mode use ``debug=1`` in the
+          URL parameter. The default value is 0.
+        * ``show`` - Whether to return an html <img> tag of the localized crosshair. To enable
+          *show* mode use ``show=1`` in the URL parameter. The default value is 0.
 
     Some examples,
 
@@ -67,6 +70,7 @@ There are 4 endpoints that should be called in the following recommended order:
     * ``http://pr-autocollimator/crosshair?show=1``
     * ``http://pr-autocollimator/crosshair?threshold=40``
     * ``http://pr-autocollimator/crosshair?threshold=40&origin=1340,960&pixels_per_arcmin=20``
+
 
     You can call this endpoint from a Python script
 
