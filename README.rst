@@ -30,12 +30,12 @@ There are 4 endpoints that should be called in the following recommended order:
 
 1. http://pr-autocollimator
 
-    Visit this URL in a web browser when aligning the autocollimator with the polygon mirror.
+    Visit this URL in a web browser to align the autocollimator with the polygon mirror.
     The image resolution is lower and the update rate is much faster.
 
 2. http://pr-autocollimator/initialize
 
-    Visit this URL in a web browser after you have aligned the autocollimator with the
+    Visit this URL in a web browser after you have finished aligning the autocollimator with the
     polygon mirror. It displays the location of the origin and the crosshair.
 
     Accepts the following parameters:
@@ -87,7 +87,14 @@ There are 4 endpoints that should be called in the following recommended order:
 
 4. http://pr-autocollimator/shutdown
 
-    Call this endpoint when you want to shut down the Raspberry Pi.
+    Call this endpoint from a script (or visit the URL in a web browser) to shut down the Raspberry Pi.
+
+    You can call this endpoint from a Python script
+
+    .. code-block:: pycon
+
+       >>> import autocollimator
+       >>> autocollimator.shutdown()
 
 Hardware
 ========
