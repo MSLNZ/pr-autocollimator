@@ -18,6 +18,7 @@ python -m pip install --upgrade setuptools wheel
 # install pr-autocollimator
 cd pr-autocollimator
 python -m pip install .
+cd ..
 
 # ANSI escape codes
 YELLOW='\033[0;33m'
