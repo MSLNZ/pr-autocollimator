@@ -191,7 +191,8 @@ def fit(data, *, n=10):
     data : :class:`numpy.ndarray`
         The projected data along an axis.
     n : :class:`int`, optional
-        The number of neighbouring pixels to include in the fit.
+        The number of neighbouring pixels (to the left and to the right of
+        the initial guess) to include in the fit.
 
     Returns
     -------
@@ -204,13 +205,12 @@ def fit(data, *, n=10):
 
     max_index = np.argmax(data)
     guess = [1., max_index, 1.]
-    x_range = np.arange(min(data.size, max(0, max_index - n)),
-                        max(0, min(max_index + n, data.size + 1)), 1)
+    x_range = np.arange(max(0, max_index - n), min(max_index + n, data.size))
     try:
         params, _ = curve_fit(gauss, x_range, data[x_range], p0=guess)
-        return params[1]
+        return round(params[1], 1)
     except IndexError:
-        return 0
+        return 0.0
 
 
 def plot_crosshair(crosshair):
