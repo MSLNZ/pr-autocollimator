@@ -152,8 +152,11 @@ def crosshair():
         else:
             xy0 = {'x': origin_position['x'], 'y': origin_position['y']}
     else:
-        x0, y0 = org.split(',')
-        xy0 = {'x': float(x0), 'y': float(y0)}
+        try:
+            x0, y0 = org.split(',')
+            xy0 = {'x': float(x0), 'y': float(y0)}
+        except (ValueError, TypeError):
+            return f'Invalid origin value: {org}', 400
 
     crosshair_ = locate_crosshair(image, thresh=threshold)
     result['x_pixel'] = crosshair_['x']
