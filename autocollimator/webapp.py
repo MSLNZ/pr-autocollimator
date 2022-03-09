@@ -181,6 +181,9 @@ def crosshair():
     if arcmin['x'] is not None and arcmin['y'] is not None:
         add_marker(image, crosshair_, (0, 255, 0), label='({x:.1f}, {y:.1f})'.format(**arcmin))
 
+    result['origin'] = xy0
+    result['pixels_per_arcmin'] = pixels_per_arcmin
+
     result['image'] = to_base64(image)
     if request.args.get('show', default=0, type=int):
         return to_img_tag(result['image'])
