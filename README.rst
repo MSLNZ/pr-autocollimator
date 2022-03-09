@@ -11,7 +11,7 @@ To install the package on a Raspberry Pi run,
 
    sudo apt install git
    git clone https://github.com/MSLNZ/pr-autocollimator.git
-   source pr-autocollimator/rpi-setup.sh
+   bash pr-autocollimator/rpi-setup.sh
 
 To install the package on a computer that is not a Raspberry Pi use the `MSL Package Manager`_
 
