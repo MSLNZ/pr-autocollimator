@@ -45,6 +45,8 @@ class AutoCollimator(object):
 
     def close(self):
         """Close the connection to the camera and turn off the lightbulb and LED ring."""
+        self.initialize_stream_enabled = False
+        self.index_stream_enabled = False
         with self._lock:
             try:
                 self._camera.close()

@@ -188,8 +188,6 @@ def crosshair():
 @app.route('/shutdown')
 def shutdown():
     """Close the application and shutdown the Raspberry Pi."""
-    autocollimator.initialize_stream_enabled = False
-    autocollimator.index_stream_enabled = False
     autocollimator.close()
     os.system('sudo shutdown now')
 
@@ -201,6 +199,4 @@ def run():
     except KeyboardInterrupt:
         pass
     finally:
-        autocollimator.initialize_stream_enabled = False
-        autocollimator.index_stream_enabled = False
         autocollimator.close()
