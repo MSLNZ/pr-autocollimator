@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# this script immediately exits when it encounters an error
+set -e
+
+HOME=~
 ENV="autocolenv"
 
 # install the dependencies for opencv-python==4.5.4.60
@@ -10,8 +14,8 @@ sudo apt-get install --yes libatlas3-base libgfortran5
 
 # create the virtual environment
 sudo apt-get install --yes python3-venv
-python3 -m venv $ENV
-source $ENV/bin/activate
+python3 -m venv ~/${ENV}
+source ~/${ENV}/bin/activate
 python -m pip install --upgrade pip
 python -m pip install --upgrade setuptools wheel
 
@@ -36,5 +40,5 @@ echo -e "${YELLOW}Make sure that the camera interface is enable in the Raspberry
 echo -e "${YELLOW}Also, edit crontab to start the web application on reboot, i.e., run${RESET}"
 echo -e "${CYAN}sudo crontab -e${RESET}"
 echo -e "${YELLOW}and then append the following line to the file,${RESET}"
-echo -e "${CYAN}@reboot /home/pi/$ENV/bin/autocollimator >/home/pi/autocollimator.log 2>&1${RESET}"
+echo -e "${CYAN}@reboot ${HOME}/${ENV}/bin/autocollimator >${HOME}/autocollimator.log 2>&1${RESET}"
 echo
