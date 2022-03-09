@@ -17,9 +17,7 @@ class AutoCollimator(object):
         self._leds = LEDRing()
 
         self.index_stream_enabled = False
-        self.index_stream_done = True
         self.initialize_stream_enabled = False
-        self.initialize_stream_done = True
 
     def frame(self):
         """Capture a frame for fast video streaming.
@@ -63,7 +61,8 @@ class AutoCollimator(object):
 
     def resolution(self, resolution):
         """Set the resolution of the camera."""
-        self._camera.set_resolution(resolution=resolution)
+        with self._lock:
+            self._camera.set_resolution(resolution=resolution)
 
     def turn_lightbulb_off(self):
         """Turn the lightbulb off."""

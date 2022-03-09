@@ -69,8 +69,6 @@ def index():
     """Fast video streaming home page for alignment purposes."""
     autocollimator.index_stream_enabled = True
     autocollimator.initialize_stream_enabled = False
-    while not autocollimator.initialize_stream_done:
-        pass
     return render_template('index.html')
 
 
@@ -78,11 +76,9 @@ def index():
 def index_stream():
     """Fast video streaming route."""
     def stream():
-        autocollimator.index_stream_done = False
         while autocollimator.index_stream_enabled:
             frame = autocollimator.frame()
             yield b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n--frame\r\n'
-        autocollimator.index_stream_done = True
 
     autocollimator.resolution('720p')
     autocollimator.turn_led_on()
@@ -96,8 +92,6 @@ def initialize():
     origin_args = request.args
     autocollimator.initialize_stream_enabled = True
     autocollimator.index_stream_enabled = False
-    while not autocollimator.index_stream_done:
-        pass
     return render_template('initialize.html')
 
 
@@ -107,7 +101,6 @@ def initialize_stream():
     def stream():
         global origin_position
         i = 0
-        autocollimator.initialize_stream_done = False
         while autocollimator.initialize_stream_enabled:
             i += 1
             image = autocollimator.capture()
@@ -123,7 +116,6 @@ def initialize_stream():
                        1, (127, 127, 127), thickness=1)
 
             yield b'Content-Type: image/jpeg\r\n\r\n' + to_bytes(image) + b'\r\n--frame\r\n'
-        autocollimator.initialize_stream_done = True
 
     threshold = origin_args.get('threshold', default=20, type=int)
     autocollimator.resolution('2560x1920')
