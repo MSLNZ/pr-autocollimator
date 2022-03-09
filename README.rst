@@ -79,7 +79,7 @@ There are 4 endpoints that should be called in the following recommended order:
        >>> import autocollimator
        >>> crosshair = autocollimator.crosshair()
        >>> crosshair.keys()
-       dict_keys(['x_pixel', 'y_pixel', 'x_arcmin', 'y_arcmin', 'x_degree', 'y_degree', 'image'])
+       dict_keys(['x_pixel', 'y_pixel', 'x_arcmin', 'y_arcmin', 'origin', 'pixels_per_arcmin', 'image'])
        >>> crosshair['x_arcmin'], crosshair['y_arcmin']
        (-4.0140337610487595, -1.759120713580572)
        >>> autocollimator.saveas('crosshair_image.jpeg', crosshair['image'])
