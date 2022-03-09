@@ -200,8 +200,12 @@ def shutdown():
 
 def run():
     """Console script to start the webapp."""
+    import socket
+    from gevent.pywsgi import WSGIServer
     try:
-        app.run(host='0.0.0.0', port=80, threaded=True)
+        with WSGIServer(('0.0.0.0', 80), application=app) as server:
+            print(f'Serving at http://{socket.gethostname()}')
+            server.serve_forever()
     except KeyboardInterrupt:
         pass
     finally:

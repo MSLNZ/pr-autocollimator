@@ -81,6 +81,7 @@ install_requires = [
     'opencv-python==4.5.4.60',
     'numpy==1.21.4',
     'requests',
+    'gevent; "arm" in platform_machine',
     'flask; "arm" in platform_machine',
     'matplotlib; "arm" in platform_machine',
     'picamera; "arm" in platform_machine',
