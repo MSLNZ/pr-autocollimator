@@ -103,7 +103,7 @@ The following hardware is used:
 * Raspberry Pi 4 (running buster, *NOT* bullseye)
 * Raspberry Pi High Quality Camera
 * Raspberry Pi HQ Camera Lens - 6mm Wide Angle
-* Duinotech (NeoPixel) RGB LED Ring - 24x LEDs, 72mm outer diameter
+* Adafruit NeoPixel RGB LED Ring - 24x LEDs
 
 Schematics
 ==========
