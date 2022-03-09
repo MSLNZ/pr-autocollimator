@@ -18,11 +18,17 @@ class LEDRing(object):
         self._neopixel = PixelStrip(number, channel, **kwargs)
         self._neopixel.begin()
 
-    def num_leds(self) -> int:
-        """Get the number of LEDs in the ring."""
+    def num_leds(self):
+        """Get the number of LEDs in the ring.
+
+        Returns
+        -------
+        :class:`int`
+            The number of LEDs in the ring.
+        """
         return self._neopixel.numPixels()
 
-    def set_brightness(self, brightness, *, update=False) -> None:
+    def set_brightness(self, brightness, *, update=False):
         """Set the brightness percentage of all LED's.
 
         Parameters
@@ -38,7 +44,7 @@ class LEDRing(object):
         if update:
             self.update()
 
-    def set_rgb(self, index, red, green, blue, *, update=False) -> None:
+    def set_rgb(self, index, red, green, blue, *, update=False):
         """Set the RGB value of an LED.
 
         Parameters
@@ -59,6 +65,6 @@ class LEDRing(object):
         if update:
             self.update()
 
-    def update(self) -> None:
+    def update(self):
         """Update the display with the data from the buffer."""
         self._neopixel.show()

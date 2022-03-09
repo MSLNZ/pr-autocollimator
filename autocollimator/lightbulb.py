@@ -17,12 +17,12 @@ class Lightbulb(object):
         GPIO.setmode(GPIO.BCM)
         GPIO.setup(channel, GPIO.OUT, initial=GPIO.LOW)
 
-    def close(self) -> None:
+    def close(self):
         """Turn off the lightbulb and clean up GPIO resources."""
         self.turn_off()
         GPIO.cleanup()
 
-    def toggle(self) -> None:
+    def toggle(self):
         """Toggle the state of the lightbulb.
 
         If it is currently on then turn it off.
@@ -30,10 +30,10 @@ class Lightbulb(object):
         """
         GPIO.output(self._channel, not GPIO.input(self._channel))
 
-    def turn_on(self) -> None:
+    def turn_on(self):
         """Turn the lightbulb on."""
         GPIO.output(self._channel, GPIO.HIGH)
 
-    def turn_off(self) -> None:
+    def turn_off(self):
         """Turn the lightbulb off."""
         GPIO.output(self._channel, GPIO.LOW)
