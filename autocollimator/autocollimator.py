@@ -17,9 +17,7 @@ class AutoCollimator(object):
         self._leds = LEDRing()
 
         self.index_stream_enabled = False
-        self.index_stream_done = True
         self.initialize_stream_enabled = False
-        self.initialize_stream_done = True
 
     def frame(self):
         """Capture a frame for fast video streaming.
