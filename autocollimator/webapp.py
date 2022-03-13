@@ -56,7 +56,7 @@ def favicon():
 @app.route('/<string:path>')
 def page_not_found(**ignore):
     """Return page not found for all undefined routes."""
-    autocollimator.initialize_stream_enabled = False
+    autocollimator.origin_stream_enabled = False
     autocollimator.index_stream_enabled = False
     return make_response(
         render_template('page_not_found.html', url_root=request.url_root),
@@ -68,7 +68,7 @@ def page_not_found(**ignore):
 def index():
     """Fast video streaming home page for alignment purposes."""
     autocollimator.index_stream_enabled = True
-    autocollimator.initialize_stream_enabled = False
+    autocollimator.origin_stream_enabled = False
     return render_template('index.html')
 
 
@@ -85,23 +85,23 @@ def index_stream():
     return Response(stream(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 
-@app.route('/initialize')
-def initialize():
-    """Initialize the settings."""
+@app.route('/origin')
+def origin():
+    """Locate the origin."""
     global origin_args
     origin_args = request.args
-    autocollimator.initialize_stream_enabled = True
+    autocollimator.origin_stream_enabled = True
     autocollimator.index_stream_enabled = False
-    return render_template('initialize.html')
+    return render_template('origin.html')
 
 
-@app.route('/initialize_stream')
-def initialize_stream():
+@app.route('/origin_stream')
+def origin_stream():
     """Locate the origin and the crosshair."""
     def stream():
         global origin_position
         i = 0
-        while autocollimator.initialize_stream_enabled:
+        while autocollimator.origin_stream_enabled:
             i += 1
             image = autocollimator.capture()
             origin_position = locate_origin(image, thresh=threshold)
@@ -128,7 +128,7 @@ def crosshair():
     """Locate the crosshair."""
     result = {}
 
-    autocollimator.initialize_stream_enabled = False
+    autocollimator.origin_stream_enabled = False
     autocollimator.index_stream_enabled = False
     autocollimator.turn_led_off()
 

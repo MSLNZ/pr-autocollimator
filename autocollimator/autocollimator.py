@@ -17,7 +17,7 @@ class AutoCollimator(object):
         self._leds = LEDRing()
 
         self.index_stream_enabled = False
-        self.initialize_stream_enabled = False
+        self.origin_stream_enabled = False
 
     def frame(self):
         """Capture a frame for fast video streaming.
@@ -43,7 +43,7 @@ class AutoCollimator(object):
 
     def close(self):
         """Close the connection to the camera and turn off the lightbulb and LED ring."""
-        self.initialize_stream_enabled = False
+        self.origin_stream_enabled = False
         self.index_stream_enabled = False
         with self._lock:
             try:
