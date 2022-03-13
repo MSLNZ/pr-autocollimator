@@ -196,8 +196,9 @@ def fit(data, *, n=10):
 
     Returns
     -------
-    :class:`float`
-        The location determined by a gaussian fit.
+    :class:`float` or :data:`None`
+        The location determined by a gaussian fit. If curve fitting fails
+        then returns :data:`None`.
     """
     def gauss(value, *p):
         a, mu, sigma = p
@@ -209,8 +210,8 @@ def fit(data, *, n=10):
     try:
         params, _ = curve_fit(gauss, x_range, data[x_range], p0=guess)
         return round(params[1], 1)
-    except IndexError:
-        return 0.0
+    except:
+        pass
 
 
 def plot_crosshair(crosshair):
