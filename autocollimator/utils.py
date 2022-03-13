@@ -378,6 +378,8 @@ def to_bytes(image):
     :class:`bytes`
         The image as bytes.
     """
+    if isinstance(image, bytes):
+        return image
     _, buf = cv.imencode('.jpeg', image)
     return buf.tobytes()
 
@@ -440,3 +442,22 @@ def to_arcmin(crosshair, origin, pixels_per_arcmin):
         }
     except TypeError:
         return {'x': None, 'y': None}
+
+
+def to_content_type(image):
+    """Generate the Content-Type header for an HTTP response when streaming frames.
+
+    Parameters
+    ----------
+    image : :class:`numpy.ndarray` or :class:`bytes`
+        The image.
+
+    Returns
+    -------
+    :class:`bytes`
+        The Content-Type header.
+    """
+    return b''.join((
+        b'Content-Type: image/jpeg\r\n\r\n',
+        to_bytes(image),
+        b'\r\n--frame\r\n'))

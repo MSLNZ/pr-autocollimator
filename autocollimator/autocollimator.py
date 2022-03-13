@@ -19,6 +19,16 @@ class AutoCollimator(object):
         self.index_stream_enabled = False
         self.origin_stream_enabled = False
 
+    def led_brightness(self):
+        """Get the brightness of all LED's.
+
+        Returns
+        -------
+        :class:`float`
+            The brightness, as a percentage, between [0, 100].
+        """
+        return self._leds.get_brightness()
+
     def frame(self):
         """Capture a frame for fast video streaming.
 
@@ -85,7 +95,7 @@ class AutoCollimator(object):
         Parameters
         ----------
         brightness : :class:`int`, optional
-            The brightness percentage, between [0, 100].
+            The brightness, as a percentage, between [0, 100].
         greyscale : :class:`int`, optional
             The greyscale value, between [0, 255].
         indices : :class:`list` of :class:`int`, optional

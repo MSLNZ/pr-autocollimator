@@ -18,7 +18,7 @@ from .utils import (
     locate_origin,
     to_arcmin,
     to_base64,
-    to_bytes,
+    to_content_type,
     to_img_tag,
     plot_crosshair,
 )
@@ -37,11 +37,14 @@ from .utils import (
 
 autocollimator = AutoCollimator()
 
+index_args = {}
 origin_args = {}
 origin_position = {}
 
 app = Flask(__name__)
 app.config['JSON_SORT_KEYS'] = False
+
+STREAM_MIMETYPE = 'multipart/x-mixed-replace; boundary=frame'
 
 
 @app.route('/favicon.ico')
@@ -67,6 +70,8 @@ def page_not_found(**ignore):
 @app.route('/')
 def index():
     """Fast video streaming home page for alignment purposes."""
+    global index_args
+    index_args = request.args
     autocollimator.index_stream_enabled = True
     autocollimator.origin_stream_enabled = False
     return render_template('index.html')
@@ -77,12 +82,13 @@ def index_stream():
     """Fast video streaming route."""
     def stream():
         while autocollimator.index_stream_enabled:
-            frame = autocollimator.frame()
-            yield b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n--frame\r\n'
+            yield to_content_type(autocollimator.frame())
+
+    brightness = index_args.get('brightness', default=50, type=float)
 
     autocollimator.resolution('720p')
-    autocollimator.turn_led_on()
-    return Response(stream(), mimetype='multipart/x-mixed-replace; boundary=frame')
+    autocollimator.turn_led_on(brightness=brightness)
+    return Response(stream(), mimetype=STREAM_MIMETYPE)
 
 
 @app.route('/origin')
@@ -105,6 +111,12 @@ def origin_stream():
             i += 1
             image = autocollimator.capture()
             origin_position = locate_origin(image, thresh=threshold)
+
+            if debug:
+                add_marker(origin_position['image'], origin_position, (255, 255, 255))
+                yield to_content_type(origin_position['image'])
+                continue
+
             add_marker(image, origin_position, (255, 255, 255))
             crosshair_position = locate_crosshair(image)
             add_marker(image, crosshair_position, (0, 255, 0))
@@ -115,12 +127,17 @@ def origin_stream():
             cv.putText(image, f'{width}x{height}', (10, 50), cv.FONT_HERSHEY_DUPLEX,
                        1, (127, 127, 127), thickness=1)
 
-            yield b'Content-Type: image/jpeg\r\n\r\n' + to_bytes(image) + b'\r\n--frame\r\n'
+            yield to_content_type(image)
 
-    threshold = origin_args.get('threshold', default=20, type=int)
+    threshold = origin_args.get('threshold', default=30, type=int)
+    debug = origin_args.get('debug', default=0, type=int)
+
+    default_brightness = autocollimator.led_brightness()
+    brightness = origin_args.get('brightness', default=default_brightness, type=float)
+
     autocollimator.resolution('2560x1920')
-    autocollimator.turn_led_on()
-    return Response(stream(), mimetype='multipart/x-mixed-replace; boundary=frame')
+    autocollimator.turn_led_on(brightness=brightness)
+    return Response(stream(), mimetype=STREAM_MIMETYPE)
 
 
 @app.route('/crosshair')
@@ -167,7 +184,10 @@ def crosshair():
     if arcmin['y'] is not None:
         result['y_degree'] = arcmin['y'] / degree_per_arcmin
 
-    autocollimator.turn_led_on()
+    default_brightness = autocollimator.led_brightness()
+    brightness = origin_args.get('brightness', default=default_brightness, type=float)
+    autocollimator.turn_led_on(brightness=brightness)
+
     image = autocollimator.capture()
     autocollimator.turn_led_off()
     if arcmin['x'] is not None and arcmin['y'] is not None:

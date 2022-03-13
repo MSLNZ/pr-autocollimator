@@ -18,6 +18,16 @@ class LEDRing(object):
         self._neopixel = PixelStrip(number, channel, **kwargs)
         self._neopixel.begin()
 
+    def get_brightness(self):
+        """Get the brightness of all LED's.
+
+        Returns
+        -------
+        :class:`float`
+            The brightness, as a percentage, between [0, 100].
+        """
+        return 100. * self._neopixel.getBrightness() / 255.
+
     def num_leds(self):
         """Get the number of LEDs in the ring.
 
@@ -34,7 +44,7 @@ class LEDRing(object):
         Parameters
         ----------
         brightness : :class:`int` or :class:`float`
-            The brightness percentage, between [0, 100].
+            The brightness, as a percentage, between [0, 100].
         update : :class:`bool`, optional
             Whether to update the LED brightness immediately or to just set the
             brightness in the buffer.
