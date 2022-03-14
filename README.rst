@@ -34,18 +34,28 @@ There are 4 endpoints that should be called in the following recommended order:
     Visit this URL in a web browser to align the autocollimator with the polygon mirror.
     The image resolution is lower and the update rate is much faster.
 
-2. http://pr-autocollimator/initialize
+    Accepts the following parameters:
+
+    * ``brightness`` - The brightness, as a percentage, to set the LED ring to.
+
+2. http://pr-autocollimator/origin
 
     Visit this URL in a web browser after you have finished aligning the autocollimator with the
     polygon mirror. It displays the location of the origin and the crosshair.
 
     Accepts the following parameters:
 
+    * ``brightness`` - The brightness, as a percentage, to set the LED ring to.
+    * ``debug`` - Whether to return an html <img> tag of the binary image of the localized
+      origin. To enable *debug* mode use ``debug=1`` in the URL parameter.
+      The default value is 0.
     * ``threshold`` - A value between [0, 255] to filter the axes from the image.
 
-    For example,
+    Some examples,
 
-    * ``http://pr-autocollimator/initialize?threshold=40``
+    * ``http://pr-autocollimator/origin?threshold=40``
+    * ``http://pr-autocollimator/origin?debug=1``
+    * ``http://pr-autocollimator/origin?threshold=25&debug=1``
 
 3. http://pr-autocollimator/crosshair
 
@@ -54,16 +64,17 @@ There are 4 endpoints that should be called in the following recommended order:
 
     Accepts the following parameters:
 
-        * ``threshold`` - A value between [0, 255] to filter the crosshair from the image.
-        * ``origin`` - The location of the origin as comma-separated values (in pixel units).
-          If not specified then the program uses the value that was determined from the last
-          call to ``http://pr-autocollimator/initialize``
-        * ``pixels_per_arcmin`` - The conversion factor to convert pixel units to arcmin units.
-        * ``debug`` - Whether to return an html <img> tag of the binary image of the localized
-          crosshair and the projections along the x and y axes. To enable *debug* mode use
-          ``debug=1`` in the URL parameter. The default value is 0.
-        * ``show`` - Whether to return an html <img> tag of the localized crosshair. To enable
-          *show* mode use ``show=1`` in the URL parameter. The default value is 0.
+    * ``brightness`` - The brightness, as a percentage, to set the LED ring to.
+    * ``debug`` - Whether to return an html <img> tag of the binary image of the localized
+      crosshair and the projections along the x and y axes. To enable *debug* mode use
+      ``debug=1`` in the URL parameter. The default value is 0.
+    * ``origin`` - The location of the origin as comma-separated values (in pixel units).
+      If not specified then the program uses the value that was determined from the last
+      call to ``http://pr-autocollimator/initialize``
+    * ``pixels_per_arcmin`` - The conversion factor to convert pixel units to arcmin units.
+    * ``show`` - Whether to return an html <img> tag of the localized crosshair. To enable
+      *show* mode use ``show=1`` in the URL parameter. The default value is 0.
+    * ``threshold`` - A value between [0, 255] to filter the crosshair from the image.
 
     Some examples,
 
